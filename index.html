@@ -35,8 +35,8 @@
     </div>
 </footer>
 
-<script src="vendors/babel.min.js"></script>
-<script type="text/babel">
+<script async src="vendors/babel.min.js"></script>
+<script async type="text/babel">
     function Header() {
         let [expanded, setExpanded] = React.useState(false);
         let [toggled, setToggled] = React.useState(false);
@@ -203,7 +203,6 @@
     };
     for (let i = 0; i < 6; ++i) {
         TABS.all.items = TABS.all.items.concat(TABS.all.items);
-        // TABS.all.items = [...TABS.all.items, ...TABS.all.items];
     }
     const TABS_KEYS = Object.keys(TABS);
 
@@ -226,7 +225,7 @@
 
         let sizes = [];
         const onSize = size => {
-            sizes = [...sizes, size];
+            sizes = sizes.push(size);
         };
 
         React.useEffect(() => {
