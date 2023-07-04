@@ -79,7 +79,6 @@
             const width = ref.current.offsetWidth;
             const height = ref.current.offsetHeight;
             if (onSize) {
-                console.log('on size');
                 onSize({ width, height });
             }
         });
@@ -202,9 +201,20 @@
             }]
         }
     };
-    // for (let i = 0; i < 6; ++i) {
-    //     TABS.all.items = TABS.all.items.concat(TABS.all.items);
-    // }
+
+    const EventSet = ({amount, onSize}) => {
+        return Array(amount).fill(0).map((arrEl, i) => {
+            return TABS["all"].items.map((item, index) =>
+                <Event
+                    key={i * 6 + index}
+                    {...item}
+                    onSize={onSize}
+                />
+            )
+        });
+    }
+
+
     const TABS_KEYS = Object.keys(TABS);
 
     function Main() {
@@ -230,13 +240,8 @@
         };
 
         React.useEffect(() => {
-            const startTime = performance.now();
-            const {sumHeight, sumWidth} = sizes.reduce((acc, item) => {
-                return {
-                    sumHeight: acc.sumHeight + item.height,
-                    sumWidth: acc.sumWidth + item.width
-                }
-            },{sumWidth: 0, sumHeight: 0})
+            const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
+            const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
 
             const newHasRightScroll = sumWidth > ref.current.offsetWidth;
             if (newHasRightScroll !== hasRightScroll) {
@@ -381,13 +386,13 @@
                     {TABS_KEYS.map(key =>
                         <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
                             <ul className="section__panel-list">
-                                {(key === 'all' ? Array(2**6).fill(0) : [0]).map((emp, i) => TABS[key].items.map((item, index) =>
+                                {key === "all" ? <EventSet amount={2**6} onSize={onSize} /> : TABS[key].items.map((item, index) =>
                                     <Event
-                                        key={(i * 6 + index)}
+                                        key={index}
                                         {...item}
                                         onSize={onSize}
                                     />
-                                ))}
+                                )}
                             </ul>
                         </div>
                     )}
