@@ -201,9 +201,27 @@
             }]
         }
     };
-    for (let i = 0; i < 6; ++i) {
-        TABS.all.items = [...TABS.all.items, ...TABS.all.items];
-    }
+    // for (let i = 0; i < 6; ++i) {
+    //     TABS.all.items = [...TABS.all.items, ...TABS.all.items];
+    // }
+
+    function EventsSingleSet(props) {
+        return props.arrayToMap.items.map((item, index) =>
+            <Event
+                {...item}
+                key={index}
+                onSize={props.onSize}
+            />
+        )
+    };
+
+    const MemoizedEventsSet = React.memo(EventsSingleSet);
+    
+    function EventsManySets(props) {
+        return Array(props.amount).fill(0).map((el, i) => <MemoizedEventsSet key={i} arrayToMap={props.arrayToMap} onSize={props.onSize} />)
+    };
+
+
     const TABS_KEYS = Object.keys(TABS);
 
     function Main() {
@@ -378,13 +396,7 @@
                     {TABS_KEYS.map(key =>
                         <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
                             <ul className="section__panel-list">
-                                {TABS[key].items.map((item, index) =>
-                                    <Event
-                                        key={index}
-                                        {...item}
-                                        onSize={onSize}
-                                    />
-                                )}
+                                {key === 'all' ? <EventsManySets amount={2**6} arrayToMap={TABS[key]} onSize={onSize} /> : <EventsSingleSet arrayToMap={TABS[key]} onSize={onSize} />}
                             </ul>
                         </div>
                     )}
