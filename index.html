@@ -201,9 +201,7 @@
             }]
         }
     };
-    for (let i = 0; i < 6; ++i) {
-        TABS.all.items = TABS.all.items.concat(TABS.all.items);
-    }
+    
     const TABS_KEYS = Object.keys(TABS);
 
     function Main() {
@@ -225,7 +223,7 @@
 
         let sizes = [];
         const onSize = size => {
-            sizes.push(size);
+            sizes = [...sizes, size];
         };
 
         React.useEffect(() => {
@@ -375,13 +373,13 @@
                     {TABS_KEYS.map(key =>
                         <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
                             <ul className="section__panel-list">
-                                {TABS[key].items.map((item, index) =>
+                                {Array(2**6).fill(2).map(item => TABS[key].items.map((item, index) =>
                                     <Event
                                         key={index}
                                         {...item}
                                         onSize={onSize}
                                     />
-                                )}
+                                ))}
                             </ul>
                         </div>
                     )}
