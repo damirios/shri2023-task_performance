@@ -201,7 +201,9 @@
             }]
         }
     };
-    
+    // for (let i = 0; i < 6; ++i) {
+    //     TABS.all.items = TABS.all.items.concat(TABS.all.items);
+    // }
     const TABS_KEYS = Object.keys(TABS);
 
     function Main() {
@@ -373,9 +375,9 @@
                     {TABS_KEYS.map(key =>
                         <div key={key} role="tabpanel" className={'section__panel' + (key === activeTab ? '' : ' section__panel_hidden')} aria-hidden={key === activeTab ? 'false' : 'true'} id={`panel_${key}`} aria-labelledby={`tab_${key}`}>
                             <ul className="section__panel-list">
-                                {Array(2**6).fill(2).map(item => TABS[key].items.map((item, index) =>
+                                {(key === 'all' ? Array(2**6).fill(0) : [0]).map((emp, i) => TABS[key].items.map((item, index) =>
                                     <Event
-                                        key={index}
+                                        key={(i * 6 + index)}
                                         {...item}
                                         onSize={onSize}
                                     />
