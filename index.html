@@ -204,11 +204,11 @@
         };
 
         React.useEffect(() => {
-            const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-            if (newHasRightScroll !== hasRightScroll) {
-                setHasRightScroll(newHasRightScroll);
-            }
-        });
+            setHasRightScroll(sumWidth > ref.current.offsetWidth);
+            // const newHasRightScroll = sumWidth > ref.current.offsetWidth;
+            // if (newHasRightScroll !== hasRightScroll) {
+            // }
+        }, []);
 
         const onArrowCLick = () => {
             const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
