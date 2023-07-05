@@ -38,7 +38,7 @@
     </div>
 </footer>
 
-<script defer type="text/babel">
+<script type="text/babel">
     function Header() {
         let [expanded, setExpanded] = React.useState(false);
         let [toggled, setToggled] = React.useState(false);
@@ -72,7 +72,7 @@
         </header>;
     }
 </script>
-<script defer type="text/babel">
+<script type="text/babel">
     function Event(props) {
         const ref = React.useRef();
 
@@ -105,7 +105,7 @@
         />)
     }
 </script>
-<script defer type="text/babel">
+<script type="text/babel">
     function General() {
         return <section className="section main__general">
             <h2 className="section__title section__title-header section__main-title">Главное</h2>
@@ -201,7 +201,7 @@
     }
 </script>
 
-<script defer type="text/babel">
+<script type="text/babel">
     function Devices() {
         const ref = React.useRef();
         const [activeTab, setActiveTab] = React.useState(new URLSearchParams(location.search).get('tab') || 'all');
@@ -393,7 +393,7 @@
         </section>
     }
 </script>
-<script defer type="text/babel">
+<script type="text/babel">
     function Main() {
         return <main className="main">
             <General />
@@ -402,16 +402,14 @@
         </main>;
     }
 </script>
-<script defer type="text/babel">
-    setTimeout(() => {
-        const root = ReactDOM.createRoot(document.getElementById('app'));
-        root.render(
-            <>
-                <Header />
-                <Main />
-            </>
-        );
-    }, 0);
+<script type="text/babel">
+    const root = ReactDOM.createRoot(document.getElementById('app'));
+    root.render(
+        <>
+            <Header />
+            <Main />
+        </>
+    );
 </script>
 </body>
 </html>
