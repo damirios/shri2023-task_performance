@@ -83,7 +83,6 @@
                 onSize({ width, height });
             }
         });
-
         return <li ref={ref} className={'event' + (props.slim ? ' event_slim' : '')}>
             <button className="event__button">
                 <span className={`event__icon event__icon_${props.icon}`} role="img" aria-label={props.iconLabel}></span>
@@ -96,13 +95,14 @@
     }
     
     function EventsSet(props) {
-        console.log('events set');
         return props.arrayToShow.map((item, index) => <Event
             key={index}
             {...item}
             onSize={props.onSize}
         />)
     }
+
+    const MemoizedEventsSet = React.memo(EventsSet);
     
     function General() {
         return <section className="section main__general">
@@ -356,13 +356,15 @@
         const onSize = size => {
             sumWidth += size.width;
         };
+        const memoizedOnSize = React.useCallback(onSize, [activeTab]);
 
         React.useEffect(() => {
-            const newHasRightScroll = sumWidth > ref.current.offsetWidth;
-            if (newHasRightScroll !== hasRightScroll) {
-                setHasRightScroll(sumWidth > ref.current.offsetWidth);
-            }
-        });
+            // console.log(sumWidth);
+            setHasRightScroll(sumWidth > ref.current.offsetWidth);
+            // const newHasRightScroll = sumWidth > ref.current.offsetWidth;
+            // if (newHasRightScroll !== hasRightScroll) {
+            // }
+        }, [activeTab]);
 
         const onArrowCLick = () => {
             const scroller = ref.current.querySelector('.section__panel:not(.section__panel_hidden)');
@@ -377,8 +379,8 @@
         return <div className="section__panel-wrapper" ref={ref}>
             <div role="tabpanel" className='section__panel' aria-hidden='false' id={`panel_${activeTab}`} aria-labelledby={`tab_${activeTab}`}>
                 <ul className="section__panel-list">
-                    {activeTab === "all" ? Array(2**6).fill(0).map((el, i) => <EventsSet key={i} arrayToShow={TABS[activeTab].items} onSize={onSize} />) : 
-                    <EventsSet arrayToShow={TABS[activeTab].items} onSize={onSize} />   
+                    {activeTab === "all" ? Array(2**6).fill(0).map((el, i) => <MemoizedEventsSet key={i} arrayToShow={TABS[activeTab].items} onSize={memoizedOnSize} />) : 
+                    <EventsSet arrayToShow={TABS[activeTab].items} onSize={onSize} />
                 }
                 </ul>
             </div>
