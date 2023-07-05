@@ -5,8 +5,8 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <title>Яндекс.Дом</title>
-    <script defer src="vendors/react-with-dom.min.js"></script>
     <script defer src="vendors/babel.min.js"></script>
+    <script defer src="vendors/react-with-dom.min.js"></script>
     <link rel="preload" as="image" href="assets/bg@2x.webp">
     <link rel="preload" as="image" href="assets/arrow-left.png">
     <link rel="preload" as="font" href="assets/lato.woff2" type="font/woff2" crossorigin="anonymous">
@@ -198,10 +198,6 @@
         const [activeTab, setActiveTab] = React.useState(new URLSearchParams(location.search).get('tab') || 'all');
         const [hasRightScroll, setHasRightScroll] = React.useState(false);
 
-        const onSelectInput = event => {
-            setActiveTab(event.target.value);
-        };
-
         let sumWidth = 0;
         const onSize = size => {
             sumWidth += size.width;
@@ -331,9 +327,7 @@
             }]
         }
     };
-        // for (let i = 0; i < 6; ++i) {
-        //     TABS.all.items = TABS.all.items.concat(TABS.all.items);
-        // }
+
         const TABS_KEYS = Object.keys(TABS);
 
         return <section className="section main__devices">
@@ -342,7 +336,7 @@
                     Избранные устройства
                 </h2>
 
-                <select className="section__select" defaultValue="all" onInput={onSelectInput}>
+                <select className="section__select" defaultValue="all" onInput={(e) => setActiveTab(e.target.value)}>
                     {TABS_KEYS.map(key =>
                         <option key={key} value={key}>
                             {TABS[key].title}
