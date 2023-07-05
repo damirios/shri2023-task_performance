@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
     <title>Яндекс.Дом</title>
-    <script defer src="vendors/react-with-dom.js"></script>
+    <script defer src="vendors/react-with-dom.min.js"></script>
     <script defer src="vendors/babel.min.js"></script>
     <link rel="preload" as="image" href="assets/bg@2x.webp">
     <link rel="preload" as="image" href="assets/arrow-left.png">
@@ -71,8 +71,6 @@
             </ul>
         </header>;
     }
-</script>
-<script type="text/babel">
     function Event(props) {
         const ref = React.useRef();
 
@@ -96,7 +94,6 @@
             </button>
         </li>;
     }
-
     function EventsSet(props) {
         return props.arrayToShow.map((item, index) => <Event
             key={index}
@@ -104,8 +101,6 @@
             onSize={props.onSize}
         />)
     }
-</script>
-<script type="text/babel">
     function General() {
         return <section className="section main__general">
             <h2 className="section__title section__title-header section__main-title">Главное</h2>
@@ -159,7 +154,6 @@
             </div>
         </section>
     }
-
     function Scripts() {
         return <section className="section main__scripts">
                 <h2 className="section__title section__title-header">Избранные сценарии</h2>
@@ -199,9 +193,6 @@
                 </ul>
             </section>
     }
-</script>
-
-<script type="text/babel">
     function Devices() {
         const ref = React.useRef();
         const [activeTab, setActiveTab] = React.useState(new URLSearchParams(location.search).get('tab') || 'all');
@@ -392,8 +383,6 @@
             </div>
         </section>
     }
-</script>
-<script type="text/babel">
     function Main() {
         return <main className="main">
             <General />
@@ -401,8 +390,6 @@
             <Devices />
         </main>;
     }
-</script>
-<script type="text/babel">
     const root = ReactDOM.createRoot(document.getElementById('app'));
     root.render(
         <>
