@@ -218,20 +218,18 @@
                 initedRef.current = true;
                 setActiveTab(new URLSearchParams(location.search).get('tab') || 'all');
             }
-        });
+        }, []);
 
         const onSelectInput = event => {
             setActiveTab(event.target.value);
         };
 
-        let sizes = [];
+            let sumWidth = 0;
         const onSize = size => {
-            sizes = sizes.concat([size]);
+            sumWidth += size.width;
         };
 
         React.useEffect(() => {
-            const sumWidth = sizes.reduce((acc, item) => acc + item.width, 0);
-            const sumHeight = sizes.reduce((acc, item) => acc + item.height, 0);
             
             const newHasRightScroll = sumWidth > ref.current.offsetWidth;
             if (newHasRightScroll !== hasRightScroll) {
@@ -394,8 +392,8 @@
         </main>;
     }
 
-    const root = ReactDOM.createRoot(document.getElementById('app'));
     setTimeout(() => {
+        const root = ReactDOM.createRoot(document.getElementById('app'));
         root.render(
             <>
                 <Header />
